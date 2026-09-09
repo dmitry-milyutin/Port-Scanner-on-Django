@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Scan Page{% endblock %}
+
+{% block content %}
+
+<div class="get_ip">
+    <form method="GET">
+        <input type="text" name="target_ip" value="{{target_ip}}">
+        <button type="submit" name="target_ip_submit">Scan</button>
+    </form>
+</div>
+
+<div class="scan_info">
+    <h1>IP scanned: </h1><br>
+    <h2>Ports scanned: </h2><br>
+    <h2>Open ports: {{ open_ports }}</h2><br>
+    <h2>Closed/Filtered ports: {{ closed_ports }}</h2>
+</div>
+
+{% endblock %}
