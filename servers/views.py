@@ -11,8 +11,8 @@ def scan_page(request):
     open_ports = []
     closed_ports = []
 
-    ports_to_check = [22, 80, 443, 8000, 53]
-    # SSH, HTTP, HTTPS, Django, DNS
+    ports_to_check = [22, 80, 443, 8000, 53, 59871, 3000]
+    # SSH, HTTP, HTTPS, Django, DNS, private django, local host
 
     for port in ports_to_check:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
