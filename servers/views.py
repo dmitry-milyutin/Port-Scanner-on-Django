@@ -28,7 +28,9 @@ def scan_page(request):
         for port in checked_ports:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(1)
-            result = sock.connect_ex((target_ip, port))
+
+            scannable_port = port if isinstance(port, int) else port[1]
+            result = sock.connect_ex((target_ip, scannable_port))
 
             if result == 0:
                 open_ports.append(port)
@@ -45,7 +47,6 @@ def get_port_name(port):
             return name
         
     return f"Port {port}"
-
 
 def search_ports(query):
     query = query.strip().lower()
