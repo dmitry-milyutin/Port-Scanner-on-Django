@@ -11,12 +11,13 @@
 
     {% for name, port in service_ports.items %}
         <label>
-            <input type="checkbox" name="ports" value="{{ port }}">
+            <input type="checkbox" name="ports" value="{{ port }}" {% if port in checked_ports %}checked{% endif %}>
             {{ name }} ({{ port }})
         </label>
     {% endfor %}
 
     <button type="submit">Scan</button>
+    <button type="submit" name="scan_all" value="1">Scan All</button>
 </form>
 
 <h2>Open ports:</h2>

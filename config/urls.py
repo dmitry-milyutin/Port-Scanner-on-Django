@@ -23,7 +23,9 @@ from servers import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_page),
-    path('scan', views.scan_page)
+    path('scan', views.scan_page),
+    path("portsearch", views.port_search_page),
+    path("allports", views.all_ports_page),
 ]
 
 

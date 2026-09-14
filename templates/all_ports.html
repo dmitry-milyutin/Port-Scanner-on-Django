@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}All Ports{% endblock %}
+{% block content %}
+
+<table>
+    <tr><th>Port</th><th>Name</th></tr>
+    {% for port, name in ports %}
+    <tr><td>{{ port }}</td><td>{{ name }}</td></tr>
+    {% endfor %}
+</table>
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <div class="previouspage"><a href="?page={{ page_obj.previous_page_number }}">Previous Page</a></div>
+    {% endif %}
+    {% if page_obj.has_next %}
+        <div class="nextpage"><a href="?page={{ page_obj.next_page_number }}">Next Page</a></div>
+        <div class="lastpage"><a href="?page={{ page_obj.paginator.num_pages }}">Last</a></div>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search Ports{% endblock %}
+{% block content %}
+
+<form method="GET">
+    <input type="text" name="q" value="{{ query }}" placeholder="e.g. ssh or 22">
+    <button type="submit" formaction="/portsearch">Search</button>
+
+    {% for port, name in results %}
+        <label>
+            <input type="checkbox" name="ports" value="{{ port }}">
+            {{ name }} ({{ port }})
+        </label>
+    {% empty %}
+        {% if query %}<p>No ports found for "{{ query }}"</p>{% endif %}
+    {% endfor %}
+
+    {% if results %}
+        <button type="submit" formaction="/scan">Scan these ports</button>
+    {% endif %}
+</form>
+
+{% endblock %}
