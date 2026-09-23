@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Scan Page{% endblock %}
+{% block content %}
+
+<div class="container">
+
+<form method="POST" class="scanner">
+    {% csrf_token %}
+
+    <section class="panel target">
+        <label for="target_ip">Target IP</label>
+        <input id="target_ip" type="text" name="target_ip" value="{{ target_ip }}" placeholder="192.168.1.10">
+    </section>
+
+    <section class="panel search">
+        <h2>Search ports</h2>
+        <div class="search-row">
+            <input type="text" name="q" value="{{ query }}" placeholder="e.g. ssh or 22">
+            <button type="submit" name="search" value="1">Search</button>
+        </div>
+
+        {% if results %}
+            <ul class="port-list">
+                {% for port, label in results %}
+                    <li>
+                        <span>{{ label }}</span>
+                        {% if port in ports %}
+                            <span class="added">Added</span>
+                        {% else %}
+                            <button type="submit" name="add" value="{{ port }}">Add</button>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% elif query %}
+            <p class="empty">No ports found for "{{ query }}"</p>
+        {% endif %}
+    </section>
+
+    <section class="panel selected">
+        <h2>Ports to scan</h2>
+        <ul class="port-list">
+            {% for port, label in selected %}
+                <li>
+                    <span>{{ label }}</span>
+                    <button type="submit" name="remove" value="{{ port }}" class="ghost">Remove</button>
+                </li>
+            {% empty %}
+                <li class="empty">No ports added yet</li>
+            {% endfor %}
+        </ul>
+
+        <div class="actions">
+            <button type="submit" name="scan" value="1" class="primary">Scan</button>
+            <button type="submit" name="scan_all" value="1">Scan all</button>
+            <button type="submit" name="clear" value="1" class="ghost">Clear</button>
+        </div>
+    </section>
+</form>
+
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+{% if scanned %}
+    <div class="results">
+        <section class="panel open">
+            <h2>Open ports ({{ open_ports|length }})</h2>
+            <ul class="port-list">
+                {% for port, label in open_ports %}
+                    <li>{{ label }}</li>
+                {% empty %}
+                    <li class="empty">None</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="panel closed">
+            <h2>Closed ports ({{ closed_ports|length }})</h2>
+            <ul class="port-list">
+                {% for port, label in closed_ports %}
+                    <li>{{ label }}</li>
+                {% empty %}
+                    <li class="empty">None</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+{% endif %}
+
+</div>
+
+
+
+{% endblock %}
