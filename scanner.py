@@ -1,6 +1,6 @@
 import socket
 
-target_ip = "127.0.0.1"
+target_ip = ""
 # target_ip ="8.8.8.8"
 ports_to_check = [22, 80, 443, 8000, 53]
 # SSH, HTTP, HTTPS, Django, DNS

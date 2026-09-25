@@ -68,10 +68,12 @@ def scan_page(request):
             port = parse_port(request.POST["add"])
             if port is not None and port not in ports:
                 ports.append(port)
+
         elif "remove" in request.POST:
             port = parse_port(request.POST["remove"])
             if port in ports:
                 ports.remove(port)
+
         elif "clear" in request.POST:
             ports = []
         elif "scan_all" in request.POST:
