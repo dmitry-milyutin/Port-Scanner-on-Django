@@ -28,7 +28,7 @@ load_dotenv()
 SECRET_KEY = os.getenv("secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.getenv("debug") == "False" else True
 
 ALLOWED_HOSTS = ["186.246.49.80", "127.0.0.1"]
 
@@ -126,9 +126,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR/"static"
-]
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR/"static"
+    ]
+    
+elif not DEBUG:
+    STATIC_ROOT = BASE_DIR/'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
