@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("secret_key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.getenv("debug") == "False" else True
 
-ALLOWED_HOSTS = ["186.246.49.80", "127.0.0.1"]
+ALLOWED_HOSTS = ["186.246.49.80", "127.0.0.1", "dima.karabalta.kg"]
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
@@ -131,7 +131,7 @@ if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR/"static"
     ]
-    
+
 elif not DEBUG:
     STATIC_ROOT = BASE_DIR/'staticfiles'
 
