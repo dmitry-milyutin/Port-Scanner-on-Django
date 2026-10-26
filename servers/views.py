@@ -1,6 +1,9 @@
 import socket
 from django.shortcuts import render
 from .common_ports import SERVICE_PORTS
+from .models import ScannedPorts, Port
+import time
+
 
 # 22 -- ["sftp", "ssh"]
 PORT_NAMES = {}
@@ -85,11 +88,17 @@ def scan_page(request):
             elif not ports:
                 error = "Add at least one port to scan"
             else:
-                try:
-                    open_ports, closed_ports = scan_ports(target_ip, sorted(ports))
-                    scanned = True
-                except socket.gaierror:
-                    error = f"Couldn't resolve '{target_ip}'"
+                open_ports, closed_ports = scan_ports(target_ip, sorted(ports))
+                scanned = True
+
+                record = ScannedPorts.objects.create(ip=target_ip)
+                for p in open_ports:
+                    name = ", ".join(PORT_NAMES.get(p, ["unknown"]))
+                    port_obj, _ = Port.objects.get_or_create(
+                        number=p,
+                        defaults={"name": name},
+                    )
+                    record.ports.add(port_obj)
 
         request.session["ports"] = ports
         request.session["target_ip"] = target_ip
